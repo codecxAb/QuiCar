@@ -42,14 +42,44 @@ def signup(request):
     
     return render(request, 'signup.html')
     
-   return render(request,'signup.html')
 
-def carList(request):
-   return render(request,'carList.html')
+# def carList(request):
+#    return render(request,'carList.html')
 
 def signout(request):
     logout(request)
     return redirect('signin')  # Redirect to sign-in page after logout
+
+
+
+def carList(request):
+    cars = [
+        {
+            "name": "Maruti Suzuki Ertiga 2024",
+            "image": "https://images.unsplash.com/photo-1517271710308-aa99f1519490?q=80&w=2071&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "rating": 4.24,
+            "trips": 28,
+            "price_per_hour": 348,
+            "total_price": 1392,
+            "features": ["Manual", "Petrol", "7 Seats"],
+            "distance": "6.3 km away",
+            "tag": "ACTIVE FASTAG",
+        },
+        {
+            "name": "Maruti Suzuki Grand Vitara 2024",
+            "image": "https://images.unsplash.com/photo-1533473359331-0135ef1b58bf?q=80&w=2070&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D",
+            "rating": 4.44,
+            "trips": 29,
+            "price_per_hour": 570,
+            "total_price": 2281,
+            "features": ["Manual", "Petrol", "5 Seats"],
+            "distance": "9.1 km away",
+            "tag": "ACTIVE FASTAG",
+        },
+        # Add more car dictionaries here if needed
+    ]
+
+    return render(request, "carList.html", {"cars": cars * 8})  # Duplicate to make 16 cards
 
 
 
