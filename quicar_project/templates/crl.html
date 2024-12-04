@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Rental System</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f4;
+        }
+        .header {
+            background-color: #333;
+            color: #fff;
+            padding: 10px 0;
+            text-align: center;
+        }
+        .header h1 {
+            margin: 0;
+        }
+        .container {
+            width: 80%;
+            margin: 20px auto;
+        }
+        .car-list {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+        }
+        .car-item {
+            background-color: #fff;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+        }
+        .car-item:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+        }
+        .car-item img {
+            width: 100%;
+            border-bottom: 1px solid #ddd;
+            border-top-left-radius: 5px;
+            border-top-right-radius: 5px;
+        }
+        .car-item h2 {
+            margin: 10px;
+            font-size: 1.5em;
+        }
+        .car-item p {
+            margin: 10px;
+            color: #555;
+        }
+        .car-item a {
+            display: block;
+            text-align: center;
+            padding: 10px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-bottom-left-radius: 5px;
+            border-bottom-right-radius: 5px;
+        }
+        .car-item a:hover {
+            background-color: #555;
+        }
+        .car-details {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            color: #fff;
+            border-radius: 5px;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+        }
+        .car-item:hover .car-details {
+            display: flex;
+        }
+        .load-more-btn {
+            display: block;
+            margin: 30px auto;
+            padding: 10px 20px;
+            background-color: #333;
+            color: #fff;
+            text-align: center;
+            border-radius: 5px;
+            text-decoration: none;
+        }
+        .load-more-btn:hover {
+            background-color: #555;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Car Rental System</h1>
+    </div>
+    <div class="container">
+        <div class="car-list">
+            {% for car in cars %}
+            <div class="car-item">
+                <img alt="{{ car.name }}" src="{{ car.image }}" height="200" width="300"/>
+                <h2>{{ car.name }}</h2>
+                <p>Price: ${{ car.price_per_hour }}/hour</p>
+                <a href="car-details.html?id={{ forloop.counter }}">
+                    View Details
+                </a>
+                <div class="car-details">
+                    <h2>{{ car.name }}</h2>
+                    <p>Rating: {{ car.rating }} ({{ car.trips }} trips)</p>
+                    <p>Features: {{ car.features | join:', ' }}</p>
+                    <p>Distance: {{ car.distance }}</p>
+                    <p>Tag: {{ car.tag }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        <a href="#" class="load-more-btn" id="load-more-btn">Load More</a>
+    </div>
+    <script>
+        document.getElementById('load-more-btn').addEventListener('click', function(e) {
+            e.preventDefault();
+            // You can either make a new AJAX request here to load more cars or use Django's pagination mechanism
+            alert('Load More functionality will be implemented here.');
+        });
+    </script>
+</body>
+</html>
