@@ -10,6 +10,9 @@ def signin(request):
 def signup(request):
    return render(request,'signup.html')
 
+def carList(request):
+   return render(request,'carList.html')
+
 def signout(request):
     return HttpResponse("Hello World auth folder a achi")
 
