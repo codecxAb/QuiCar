@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quicar - Car Rentals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div class="flex justify-between items-center h-16">
+          <div class="flex items-center">
+            <img src="{ % static "img/logo-removebg.png" %}" alt="Quicar"
+            class="h-8 w-8" />
+            <span class="ml-2 text-xl font-bold text-gray-800">Quicar</span>
+          </div>
+          <div class="hidden md:flx space-x-8">
+            <a href="#" class="text-gray-700 hover:text-gray-900">Home</a>
+            <a href="#features" class="text-gray-700 hover:text-gray-900"
+              >Features</a
+            >
+            <a href="#pricing" class="text-gray-700 hover:text-gray-900"
+              >Pricing</a
+            >
+            <a href="#contact" class="text-gray-700 hover:text-gray-900"
+              >Contact</a
+            >
+          </div>
+          <div class="flex items-center space-x-4">
+            <a href="/signin" class="text-gray-700 hover:text-gray-900"
+              >Sign In</a
+            >
+            <a
+              href="/signup"
+              class="px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+              >Sign Up</a
+            >
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="bg-white">
+      <div
+        class="max-w-7xl mx-auto px-4 py-16 sm:px-6 lg:px-8 flex items-center justify-between"
+      >
+        <div class="w-full md:w-1/2">
+          <h1 class="text-4xl font-bold text-gray-900 sm:text-5xl">
+            Rent the Perfect Car for Every Occasion
+          </h1>
+          <p class="mt-4 text-lg text-gray-600">
+            With Quicar, you can easily find and rent high-quality vehicles for
+            every need. Safe, fast, and convenient.
+          </p>
+          <div class="mt-6 flex space-x-4">
+            <a
+              href="/signup"
+              class="px-6 py-3 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+              >Get Started</a
+            >
+            <a
+              href="#features"
+              class="px-6 py-3 bg-gray-200 text-gray-800 rounded-lg hover:bg-gray-300"
+              >Learn More</a
+            >
+          </div>
+        </div>
+        <div class="hidden md:block w-1/2">
+          <img
+            src="car_image.png"
+            alt="Car"
+            class="w-full h-auto rounded-lg shadow-lg"
+          />
+        </div>
+      </div>
+    </header>
+
+    <!-- Features Section -->
+    <section id="features" class="bg-gray-100 py-16">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <h2 class="text-3xl font-bold text-center text-gray-800">
+          Why Choose Quicar?
+        </h2>
+        <div class="mt-12 grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-bold text-gray-800">Wide Range of Cars</h3>
+            <p class="mt-2 text-gray-600">
+              From economy to luxury, find cars that fit your budget and style.
+            </p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-bold text-gray-800">Affordable Pricing</h3>
+            <p class="mt-2 text-gray-600">
+              Transparent pricing with no hidden costs.
+            </p>
+          </div>
+          <div class="bg-white p-6 rounded-lg shadow">
+            <h3 class="text-xl font-bold text-gray-800">
+              24/7 Customer Support
+            </h3>
+            <p class="mt-2 text-gray-600">
+              We’re here to help whenever you need us.
+            </p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 py-8">
+      <div
+        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-white"
+      >
+        <p>&copy; 2024 Quicar. All rights reserved.</p>
+      </div>
+    </footer>
+  </body>
+</html>

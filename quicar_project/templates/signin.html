@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign In</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+  </head>
+  <body class="bg-gray-50">
+    <div class="min-h-screen flex items-center justify-center">
+      <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
+        <h2 class="text-2xl font-bold text-gray-800 text-center">
+          Sign In to Quicar
+        </h2>
+        <form class="mt-6">
+          <div class="mb-4">
+            <label for="email" class="block text-gray-600">Email</label>
+            <input
+              type="email"
+              id="email"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              required
+            />
+          </div>
+          <div class="mb-4">
+            <label for="password" class="block text-gray-600">Password</label>
+            <input
+              type="password"
+              id="password"
+              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              required
+            />
+          </div>
+          <button
+            type="submit"
+            class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+          >
+            Sign In
+          </button>
+          <p class="mt-4 text-center text-sm text-gray-600">
+            Don't have an account?
+            <a href="/signup" class="text-indigo-500 hover:underline"
+              >Sign Up</a
+            >
+          </p>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
