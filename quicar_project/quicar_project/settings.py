@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "quicar_app",
+    # "quicar_app",
     "manage_cars",
-    "auth",
+    "user_auth",
     "ai",
 ]
 
