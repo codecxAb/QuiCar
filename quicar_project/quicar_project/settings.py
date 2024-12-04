@@ -25,7 +25,7 @@ SECRET_KEY = "django-insecure-lww!ql18947@mv+tgd7p9phpb$v6(5sc-vau8#23-yikz^j&4f
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -119,7 +119,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = "static/"
+STATIC_URL = '/static/'  # This tells Django where to look for static files
+STATICFILES_DIRS = [
+    BASE_DIR / "static",  # This is where Django will look for additional static files
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
