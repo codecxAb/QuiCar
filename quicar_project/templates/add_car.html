@@ -1,0 +1,83 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Car</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h2>Add New Car</h2>
+        <form method="POST" enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <div class="mb-3">
+                <label for="name" class="form-label">Car Name</label>
+                <input type="text" name="name" class="form-control" id="name" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="image" class="form-label">Car Image</label>
+                <input type="file" name="image" class="form-control" id="image" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="price" class="form-label">Price</label>
+                <input type="number" step="0.01" name="price" class="form-control" id="price" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="description" class="form-label">Description</label>
+                <textarea name="description" class="form-control" id="description" rows="4" required></textarea>
+            </div>
+            
+            <div class="mb-3">
+                <label for="year" class="form-label">Year</label>
+                <input type="number" name="year" class="form-control" id="year" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="engine" class="form-label">Engine</label>
+                <input type="text" name="engine" class="form-control" id="engine" required>
+            </div>
+            
+            <!-- <div class="mb-3">
+                <label for="mileage" class="form-label">Mileage</label>
+                <input type="number" name="mileage" class="form-control" id="mileage" required>
+            </div> -->
+            
+            <div class="mb-3">
+                <label for="location" class="form-label">Location</label>
+                <input type="text" name="location" class="form-control" id="location" required>
+            </div>
+            
+            <div class="mb-3">
+                <label for="rental_rate" class="form-label">Rental Rate (Optional)</label>
+                <input type="number" step="0.01" name="rental_rate" class="form-control" id="rental_rate">
+            </div>
+            
+            <div class="mb-3">
+                <label for="rental_duration" class="form-label">Rental Duration (Optional)</label>
+                <input type="number" name="rental_duration" class="form-control" id="rental_duration">
+            </div>
+            
+            <div class="mb-3">
+                <label for="car_type" class="form-label">Car Type</label>
+                <select name="car_type" class="form-control" id="car_type" required>
+                    <option value="SUV">SUV</option>
+                    <option value="Sedan">Sedan</option>
+                    <option value="Sports Car">Sports Car</option>
+                    <option value="Luxury">Luxury</option>
+                    <option value="Convertible">Convertible</option>
+                </select>
+            </div>
+            
+            <button type="submit" class="btn btn-primary">Add Car</button>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

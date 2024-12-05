@@ -16,7 +16,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User 
 from django.contrib import messages
-# from .manage_cars.views import carList
+from manage_cars.views import carList
 def signin(request):
     if request.method == 'POST':
         email = request.POST['email']
@@ -25,7 +25,7 @@ def signin(request):
         user = authenticate(request, username=email, password=password)
         if user is not None:
             login(request, user)
-            return redirect('home')  # Redirect to home page after successful login 
+            return redirect('carList')  # Redirect to home page after successful login 
         else:
             messages.error(request, 'Invalid email or password')
     
