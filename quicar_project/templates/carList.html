@@ -158,6 +158,13 @@
           >
             Search
           </button>
+          <div class="logout">
+            <a href="{% url 'signout' %}">
+                <i class="fas fa-sign-out-alt"></i>
+                <span>Logout</span>
+            </a>
+        </div>
+        
         </div>
       </form>
     </div>
@@ -170,7 +177,7 @@
         <!-- Loop through the list of cars and display each car item -->
         {% for car in cars %}
         <div class="car-item">
-          <img src="{{ car.image }}" alt="{{ car.name }}" />
+          <img src="{{ car.image.url }}" alt="{{ car.name }}" />
           <div class="car-details">
             <h3>{{ car.name }}</h3>
             <p>Price: {{ car.price }}</p>

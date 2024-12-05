@@ -1,61 +1,72 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_protect
 # Create your views here.
 def home(request):
     return HttpResponse("Hello World manage car folder a achi")
 
+# def carList(request):
+#     # Hardcoded list of cars with details (name, image URL, price, and unique ID)
+#     cars = [
+#         {
+#             'id': 1,
+#             'name': 'Tesla Model S',
+#             'image': 'https://www.tesla.com/sites/default/files/modelsx-new/social/model-s-hero-social.jpg',
+#             'price': '$79,990'
+#         },
+#         {
+#             'id': 2,
+#             'name': 'Ford Mustang',
+#             'image': 'https://static.overfuel.com/dealers/trust-auto/image/2020-ford-mustang-shelby-gt350-heritage-edition-3-1024x640.jpg',
+#             'price': '$55,000'
+#         },
+#         {
+#             'id': 3,
+#             'name': 'Chevrolet Camaro',
+#             'image': 'https://www.motortrend.com/uploads/sites/5/2017/06/2018-Chevrolet-Camaro-ZL1-1LE-front-three-quarter-in-motion-04-e1498503636653.jpg?w=768&width=768&q=75&format=webp',
+#             'price': '$45,000'
+#         },
+#         {
+#             'id': 4,
+#             'name': 'BMW M3',
+#             'image': 'https://cdn.motor1.com/images/mgl/1ZQrxK/s1/2023-bmw-m3-cs-first-drive-review.webp',
+#             'price': '$70,000'
+#         },
+#         {
+#             'id': 5,
+#             'name': 'Audi A4',
+#             'image': 'https://hips.hearstapps.com/hmg-prod/images/2021-audi-a4-45-tfsi-quattro-104-1607927016.jpg?crop=0.450xw:0.380xh;0.226xw,0.399xh&resize=2048:*',
+#             'price': '$40,000'
+#         },
+#         {
+#             'id': 6,
+#             'name': 'Mercedes-Benz C-Class',
+#             'image': 'https://images.indianexpress.com/2018/09/mercedes-c-class.jpg',
+#             'price': '$43,000'
+#         },
+#         {
+#             'id': 7,
+#             'name': 'Porsche 911',
+#             'image': 'https://economictimes.indiatimes.com/thumb/msid-110533985,width-1200,height-900,resizemode-4,imgsize-58280/porsche.jpg?from=mdr',
+#             'price': '$100,000'
+#         },
+#         {
+#             'id': 8,
+#             'name': 'Lexus RX 350',
+#             'image': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZH0TmHOnzaLJd5Sw1CXRiNBFhHKiuqht5Sg&s',
+#             'price': '$45,000'
+#         },
+#     ]
+
+#     # You can handle pagination here if needed
+
+#     return render(request, 'carList.html', {'cars': cars})
+@csrf_protect
+@login_required
 def carList(request):
-    # Hardcoded list of cars with details (name, image URL, price, and unique ID)
-    cars = [
-        {
-            'id': 1,
-            'name': 'Tesla Model S',
-            'image': 'https://www.tesla.com/sites/default/files/modelsx-new/social/model-s-hero-social.jpg',
-            'price': '$79,990'
-        },
-        {
-            'id': 2,
-            'name': 'Ford Mustang',
-            'image': 'https://static.overfuel.com/dealers/trust-auto/image/2020-ford-mustang-shelby-gt350-heritage-edition-3-1024x640.jpg',
-            'price': '$55,000'
-        },
-        {
-            'id': 3,
-            'name': 'Chevrolet Camaro',
-            'image': 'https://www.motortrend.com/uploads/sites/5/2017/06/2018-Chevrolet-Camaro-ZL1-1LE-front-three-quarter-in-motion-04-e1498503636653.jpg?w=768&width=768&q=75&format=webp',
-            'price': '$45,000'
-        },
-        {
-            'id': 4,
-            'name': 'BMW M3',
-            'image': 'https://cdn.motor1.com/images/mgl/1ZQrxK/s1/2023-bmw-m3-cs-first-drive-review.webp',
-            'price': '$70,000'
-        },
-        {
-            'id': 5,
-            'name': 'Audi A4',
-            'image': 'https://hips.hearstapps.com/hmg-prod/images/2021-audi-a4-45-tfsi-quattro-104-1607927016.jpg?crop=0.450xw:0.380xh;0.226xw,0.399xh&resize=2048:*',
-            'price': '$40,000'
-        },
-        {
-            'id': 6,
-            'name': 'Mercedes-Benz C-Class',
-            'image': 'https://images.indianexpress.com/2018/09/mercedes-c-class.jpg',
-            'price': '$43,000'
-        },
-        {
-            'id': 7,
-            'name': 'Porsche 911',
-            'image': 'https://economictimes.indiatimes.com/thumb/msid-110533985,width-1200,height-900,resizemode-4,imgsize-58280/porsche.jpg?from=mdr',
-            'price': '$100,000'
-        },
-        {
-            'id': 8,
-            'name': 'Lexus RX 350',
-            'image': 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRZH0TmHOnzaLJd5Sw1CXRiNBFhHKiuqht5Sg&s',
-            'price': '$45,000'
-        },
-    ]
+    # Fetch all cars from the database
+    cars = RentalCar.objects.all()
 
     # You can handle pagination here if needed
 
@@ -124,6 +135,6 @@ def add_car(request):
         # Show a success message
         messages.success(request, f'{new_car.name} has been added successfully!')
 
-        return redirect('car_list')  # Redirect to a car listing page after saving the car
+        return render(request,'dealer_Dashboard.html')  # Redirect to a car listing page after saving the car
 
     return render(request, 'add_car.html')

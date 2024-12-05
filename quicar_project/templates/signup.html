@@ -35,6 +35,19 @@
               required
             />
           </div>
+
+          <div class="mb-4">
+            <label for="user_type" class="block text-gray-600">Are you a:</label>
+            <div class="flex items-center space-x-4">
+              <label>
+                <input type="radio" name="user_type" value="customer" checked /> Customer
+              </label>
+              <label>
+                <input type="radio" name="user_type" value="dealer" /> Dealer
+              </label>
+            </div>
+          </div>
+
           <button
             type="submit"
             class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"

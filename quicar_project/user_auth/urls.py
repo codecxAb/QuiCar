@@ -7,7 +7,7 @@ urlpatterns = [
     path('signin/',views.signin,name='signin'),
     path('signup/',views.signup,name='signup'),
     path('signout/',views.signout,name='signout'),
-    
+    path('dealer_dashboard/',views.dealer_dashboard,name='dealer_dashboard'),
     # path('dashboard/',views.dashboard,name='dashboard'),
     # path('carlist/',views.carList,name='carList'),
     # path('cars/', views.carList, name='car_list'),
