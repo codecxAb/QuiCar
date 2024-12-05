@@ -47,6 +47,9 @@
       }
       .car-details {
         display: none;
+        flex-direction: column;
+        gap: 4;
+        justify-content: center;
         position: absolute;
         top: 0;
         left: 0;
@@ -80,14 +83,14 @@
       .view-details-btn {
         display: inline-block;
         padding: 10px 20px;
-        background-color: #333;
+        background-color: royalblue;
         color: #fff;
         text-decoration: none;
         margin-top: 10px;
         border-radius: 5px;
       }
       .view-details-btn:hover {
-        background-color: #555;
+        background-color: rgb(60, 96, 206);
       }
       .grid-container {
         display: grid;
@@ -97,6 +100,68 @@
     </style>
   </head>
   <body>
+    <div class="max-w-7xl mx-auto p-6 bg-white rounded-lg shadow-md">
+      <form method="GET" action="" class="flex items-center space-x-4">
+        <!-- Start Date -->
+        <div class="flex flex-col">
+          <label for="start_date" class="text-sm font-medium text-gray-700">Start Date</label>
+          <input
+            type="date"
+            id="start_date"
+            name="start_date"
+            class="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
+            required
+          />
+        </div>
+
+        <!-- Start Time -->
+        <div class="flex flex-col">
+          <label for="start_time" class="text-sm font-medium text-gray-700">Start Time</label>
+          <input
+            type="time"
+            id="start_time"
+            name="start_time"
+            class="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
+            required
+          />
+        </div>
+
+        <!-- End Date -->
+        <div class="flex flex-col">
+          <label for="end_date" class="text-sm font-medium text-gray-700">End Date</label>
+          <input
+            type="date"
+            id="end_date"
+            name="end_date"
+            class="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
+            required
+          />
+        </div>
+
+        <!-- End Time -->
+        <div class="flex flex-col">
+          <label for="end_time" class="text-sm font-medium text-gray-700">End Time</label>
+          <input
+            type="time"
+            id="end_time"
+            name="end_time"
+            class="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
+            required
+          />
+        </div>
+
+        <!-- Search Button -->
+        <div>
+          <button
+            type="submit"
+            class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+          >
+            Search
+          </button>
+        </div>
+      </form>
+    </div>
+
     <!-- <div class="header"> -->
       <!-- <h1>Car Rental System</h1> -->
     <!-- </div> -->
@@ -109,11 +174,12 @@
           <div class="car-details">
             <h3>{{ car.name }}</h3>
             <p>Price: {{ car.price }}</p>
+            <a href="{% url 'car_details' car_id=car.id %}" class="view-details-btn">View Details</a>
           </div>
           <div class="car-info">
             <h3>{{ car.name }}</h3>
             <p>Price: {{ car.price }}</p>
-            <a href="{% url 'car_details' car_id=car.id %}" class="view-details-btn">View Details</a>
+            <!-- <a href="{% url 'car_details' car_id=car.id %}" class="view-details-btn">View Details</a> -->
           </div>
         </div>
         {% endfor %}

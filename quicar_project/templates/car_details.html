@@ -1,19 +1,442 @@
-<!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>{{ car.name }} Details</title>
+    <meta charset="utf-8"/>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+    <title>
+        Car Rent Dashboard
+    </title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;display=swap" rel="stylesheet"/>
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f5f5f5;
+            display: flex;
+        }
+        .sidebar {
+            width: 250px;
+            background-color: #1a1a1a;
+            color: #fff;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+        .sidebar .logo {
+            display: flex;
+            align-items: center;
+            margin-bottom: 40px;
+        }
+        .sidebar .logo img {
+            width: 30px;
+            margin-right: 10px;
+        }
+        .sidebar .menu {
+            list-style: none;
+            padding: 0;
+        }
+        .sidebar .menu li {
+            margin-bottom: 20px;
+        }
+        .sidebar .menu li a {
+            color: #fff;
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+        }
+        .sidebar .menu li a i {
+            margin-right: 10px;
+        }
+        .sidebar .menu li a.active {
+            color: #007bff;
+        }
+        .sidebar .logout {
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+        }
+        .sidebar .logout i {
+            margin-right: 10px;
+        }
+        .main-content {
+            flex: 1;
+            padding: 20px;
+            background-color: #fff;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+        .header .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .header .search-bar input {
+            border: none;
+            background: none;
+            outline: none;
+            margin-left: 10px;
+        }
+        .header .notification {
+            position: relative;
+        }
+        .header .notification i {
+            font-size: 20px;
+        }
+        .header .notification .badge {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background-color: red;
+            color: #fff;
+            border-radius: 50%;
+            padding: 2px 5px;
+            font-size: 10px;
+        }
+        .statistics {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .statistics .card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 30%;
+        }
+        .statistics .card h3 {
+            margin: 0;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .statistics .card .value {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .statistics .card .change {
+            display: flex;
+            align-items: center;
+        }
+        .statistics .card .change i {
+            margin-right: 5px;
+        }
+        .statistics .card .change.positive {
+            color: green;
+        }
+        .statistics .card .change.negative {
+            color: red;
+        }
+        .statistics .card .comparison {
+            font-size: 14px;
+            color: #888;
+        }
+        .availability {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 20px;
+        }
+        .availability .card {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 48%;
+        }
+        .availability .card h3 {
+            margin: 0;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .availability .card .form-group {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .availability .card .form-group label {
+            margin-right: 10px;
+        }
+        .availability .card .form-group input,
+        .availability .card .form-group select {
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            flex: 1;
+        }
+        .availability .card .form-group button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .status {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+        }
+        .status h3 {
+            margin: 0;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .status table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .status table th,
+        .status table td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+        .status table th {
+            background-color: #f5f5f5;
+        }
+        .status table .status-completed {
+            color: green;
+        }
+        .status table .status-pending {
+            color: orange;
+        }
+        .status table .status-inroute {
+            color: red;
+        }
+        .status table .details-button {
+            background-color: #007bff;
+            color: #fff;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .summary {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        .summary h3 {
+            margin: 0;
+            font-size: 18px;
+            margin-bottom: 10px;
+        }
+        .summary .chart {
+            width: 100%;
+            height: 200px;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>{{ car.name }}</h1>
-    <img src="{{ car.image }}" alt="{{ car.name }}" width="500">
-    <p><strong>Price:</strong> {{ car.price }}</p>
-    <p><strong>Year:</strong> {{ car.year }}</p>
-    <p><strong>Engine:</strong> {{ car.engine }}</p>
-    <p><strong>Mileage:</strong> {{ car.mileage }}</p>
-    <p><strong>Description:</strong> {{ car.description }}</p>
+    <div class="sidebar">
+        <div>
+            <div class="logo">
+                <img alt="Car Rent Logo" height="30" src="https://storage.googleapis.com/a1aa/image/nX8UCBkoCVa6DRHuKgPjQdnH0J9iKcZlHo1MT9GjyoyX379E.jpg" width="30"/>
+                <h2>CAR RENT</h2>
+            </div>
+            <ul class="menu">
+                <li><a class="active" href="#"><i class="fas fa-tachometer-alt"></i> Dashboard</a></li>
+                <li><a href="#"><i class="fas fa-car"></i> Drivers</a></li>
+                <li><a href="#"><i class="fas fa-book"></i> Bookings</a></li>
+                <li><a href="#"><i class="fas fa-bell"></i> Notifications</a></li>
+                <li><a href="#"><i class="fas fa-cog"></i> Settings</a></li>
+                <li><a href="#"><i class="fas fa-credit-card"></i> Payment Details</a></li>
+                <li><a href="#"><i class="fas fa-exchange-alt"></i> Transactions</a></li>
+                <li><a href="#"><i class="fas fa-file-alt"></i> Car Report</a></li>
+            </ul>
+        </div>
+        <div class="logout">
+            <i class="fas fa-sign-out-alt"></i>
+            <span>Logout</span>
+        </div>
+    </div>
+    <div class="main-content">
+        <div class="header">
+            <div class="search-bar">
+                <i class="fas fa-search"></i>
+                <input placeholder="Search here" type="text"/>
+            </div>
+            <div class="notification">
+                <i class="fas fa-bell"></i>
+                <span class="badge">3</span>
+            </div>
+        </div>
+        <div class="statistics">
+            <div class="card">
+                <h3>Income</h3>
+                <div class="value">$9460.00</div>
+                <div class="change negative"><i class="fas fa-arrow-down"></i> 1.5%</div>
+                <div class="comparison">Compared to $9940 yesterday</div>
+                <div class="comparison">Last week $25658.00</div>
+            </div>
+            <div class="card">
+                <h3>Expenses</h3>
+                <div class="value">$5660.00</div>
+                <div class="change positive"><i class="fas fa-arrow-up"></i> 2.5%</div>
+                <div class="comparison">Compared to $5240 yesterday</div>
+                <div class="comparison">Last week $25658.00</div>
+            </div>
+            <div class="card">
+                <h3>Hire vs Cancel</h3>
+                <div class="chart">
+                    <canvas id="hireCancelChart"></canvas>
+                </div>
+                <div class="comparison">Total Hired 54%</div>
+                <div class="comparison">Total Canceled 20%</div>
+                <div class="comparison">Total Pending 26%</div>
+            </div>
+        </div>
+        <div class="availability">
+            <div class="card">
+                <h3>Car Availability</h3>
+                <div class="form-group">
+                    <label for="car-number">Car number</label>
+                    <select id="car-number">
+                        <option value="1">Car number</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="date">Date</label>
+                    <input id="date" type="date" value="2022-11-20"/>
+                </div>
+                <div class="form-group">
+                    <label for="time">Time</label>
+                    <input id="time" type="time" value="10:00"/>
+                </div>
+                <div class="form-group">
+                    <button>Check</button>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Live Car Status</h3>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>No.</th>
+                            <th>Car no.</th>
+                            <th>Driver</th>
+                            <th>Status</th>
+                            <th>Earning</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>01</td>
+                            <td>6465</td>
+                            <td>Alex Noman</td>
+                            <td class="status-completed">Completed</td>
+                            <td>$35.44</td>
+                            <td><button class="details-button">Details</button></td>
+                        </tr>
+                        <tr>
+                            <td>02</td>
+                            <td>5665</td>
+                            <td>Razib Rahman</td>
+                            <td class="status-pending">Pending</td>
+                            <td>$0.00</td>
+                            <td><button class="details-button">Details</button></td>
+                        </tr>
+                        <tr>
+                            <td>03</td>
+                            <td>1755</td>
+                            <td>Luke Norton</td>
+                            <td class="status-inroute">In route</td>
+                            <td>$23.50</td>
+                            <td><button class="details-button">Details</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+        <div class="summary">
+            <h3>Earning Summary</h3>
+            <div class="chart">
+                <canvas id="earningChart"></canvas>
+            </div>
+        </div>
+    </div>
+    <script>
+        const ctxEarning = document.getElementById('earningChart').getContext('2d');
+        const earningChart = new Chart(ctxEarning, {
+            type: 'line',
+            data: {
+                labels: ['May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct'],
+                datasets: [{
+                    label: 'Last 6 months',
+                    data: [120000, 150000, 100000, 200000, 250000, 220000],
+                    borderColor: 'rgba(0, 123, 255, 1)',
+                    backgroundColor: 'rgba(0, 123, 255, 0.2)',
+                    fill: true,
+                }, {
+                    label: 'Same period last year',
+                    data: [100000, 140000, 90000, 180000, 230000, 210000],
+                    borderColor: 'rgba(0, 0, 0, 0.1)',
+                    backgroundColor: 'rgba(0, 0, 0, 0.05)',
+                    fill: true,
+                }]
+            },
+            options: {
+                responsive: true,
+                scales: {
+                    x: {
+                        beginAtZero: true
+                    },
+                    y: {
+                        beginAtZero: true
+                    }
+                }
+            }
+        });
 
-    <a href="{% url 'carList' %}" class="back-btn">Back to Car List</a>
+        const ctxHireCancel = document.getElementById('hireCancelChart').getContext('2d');
+        const hireCancelChart = new Chart(ctxHireCancel, {
+            type: 'pie',
+            data: {
+                labels: ['Total Hired', 'Total Canceled', 'Total Pending'],
+                datasets: [{
+                    data: [54, 20, 26],
+                    backgroundColor: [
+                        'rgba(0, 123, 255, 0.7)',
+                        'rgba(255, 99, 132, 0.7)',
+                        'rgba(255, 205, 86, 0.7)'
+                    ],
+                    borderColor: [
+                        'rgba(0, 123, 255, 1)',
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(255, 205, 86, 1)'
+                    ],
+                    borderWidth: 1
+                }]
+            },
+            options: {
+                responsive: true,
+                plugins: {
+                    legend: {
+                        position: 'top',
+                    },
+                    tooltip: {
+                        callbacks: {
+                            label: function(tooltipItem) {
+                                return tooltipItem.label + ': ' + tooltipItem.raw + '%';
+                            }
+                        }
+                    }
+                }
+            }
+        });
+    </script>
 </body>
 </html>
