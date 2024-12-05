@@ -40,6 +40,8 @@ def signup(request):
         # After successful signup, redirect to the appropriate page
         if user_type == 'dealer':
             # You can add extra fields for dealer like a business name etc. if needed
+            messages.success(request, 'Account created successfully! Welcome to Our dealer community.')
+
             return redirect('dealer_dashboard')  # Redirect dealer to the dealer dashboard
         else:
             messages.success(request, 'Account created successfully! Please sign in.')
