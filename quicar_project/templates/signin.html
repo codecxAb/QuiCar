@@ -1,62 +1,93 @@
-{% load static %}
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Sign In</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+      }
+    </style>
   </head>
-  <body class="bg-gray-50">
-    <div class="min-h-screen flex items-center justify-center">
-      <div class="w-full max-w-md bg-white p-8 rounded-lg shadow-lg">
-        <h2 class="text-2xl font-bold text-gray-800 text-center">
+  <body class="bg-gray-900 text-white">
+    <div class="min-h-screen flex items-center justify-center relative">
+      <img
+        src="https://storage.googleapis.com/a1aa/image/9GeNkmD5Wi2tfUJtDJ9l8SghHqGwdSI1SMwcyOxJSoA7Mf2nA.jpg"
+        alt="Luxury car"
+        class="absolute top-0 left-0 w-full h-full object-cover opacity-20"
+      />
+      <div
+        class="w-full max-w-md bg-black bg-opacity-80 p-8 rounded-lg shadow-lg relative z-10"
+      >
+        <h2 class="text-2xl font-bold text-yellow-500 text-center mb-6">
           Sign In to Quicar
         </h2>
         <form method="POST">
           {% csrf_token %}
           <div class="mb-4">
-            <label for="email" class="block text-gray-600">Email</label>
+            <label for="email" class="block text-gray-300">Email</label>
             <input
               type="email"
               id="email"
               name="email"
-              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
               required
             />
           </div>
           <div class="mb-4">
-            <label for="password" class="block text-gray-600">Password</label>
+            <label for="password" class="block text-gray-300">Password</label>
             <input
               type="password"
               id="password"
               name="password"
-              class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
               required
             />
           </div>
 
           <div class="mb-4">
-            <label for="user_type" class="block text-gray-600">Are you a:</label>
+            <label for="user_type" class="block text-gray-300"
+              >Are you a:</label
+            >
             <div class="flex items-center space-x-4">
-              <label>
-                <input type="radio" name="user_type" value="customer" checked /> Customer
+              <label class="text-gray-300">
+                <input
+                  type="radio"
+                  name="user_type"
+                  value="customer"
+                  checked
+                  class="mr-2"
+                />
+                Customer
               </label>
-              <label>
-                <input type="radio" name="user_type" value="dealer" /> Dealer
+              <label class="text-gray-300">
+                <input
+                  type="radio"
+                  name="user_type"
+                  value="dealer"
+                  class="mr-2"
+                />
+                Dealer
               </label>
             </div>
           </div>
 
           <button
             type="submit"
-            class="w-full px-4 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700"
+            class="w-full px-4 py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-600"
           >
             Sign In
           </button>
-          <p class="mt-4 text-center text-sm text-gray-600">
+          <p class="mt-4 text-center text-sm text-gray-300">
             Don't have an account?
-            <a href="{% url 'signup' %}" class="text-indigo-500 hover:underline">Sign Up</a>
+            <a href="{% url 'signup' %}" class="text-yellow-500 hover:underline"
+              >Sign Up</a
+            >
           </p>
         </form>
       </div>

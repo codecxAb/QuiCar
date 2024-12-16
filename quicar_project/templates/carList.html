@@ -1,196 +1,215 @@
-<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Car Rental System</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
-    <style>
-      body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #f4f4f4;
-        margin: 0;
-        padding: 0;
-      }
-      .header {
-        background-color: #333;
-        color: #fff;
-        padding: 10px 0;
-        text-align: center;
-      }
-      .header h1 {
-        margin: 0;
-      }
-      .container {
-        width: 80%;
-        margin: 20px auto;
-      }
-      .car-item {
-        background-color: #fff;
-        border: 1px solid #ddd;
-        border-radius: 5px;
-        overflow: hidden;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-        position: relative;
-        transition: transform 0.2s, box-shadow 0.2s;
-      }
-      .car-item:hover {
-        transform: scale(1.05);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-      }
-      .car-item img {
-        width: 100%;
-        height: 200px;
-        object-fit: cover;
-      }
-      .car-details {
-        display: none;
-        flex-direction: column;
-        gap: 4;
-        justify-content: center;
-        position: absolute;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.8);
-        color: #fff;
-        text-align: center;
-        padding: 20px;
-        justify-content: center;
-        align-items: center;
-      }
-      .car-item:hover .car-details {
-        display: flex;
-      }
-      .car-info {
-        padding: 16px;
-      }
-      .car-info h3 {
-        font-size: 1.25rem;
-        font-weight: bold;
-      }
-      .car-info p {
-        color: #555;
-      }
-      .car-price {
-        font-size: 1.25rem;
-        font-weight: bold;
-        color: #333;
-      }
-      .view-details-btn {
-        display: inline-block;
-        padding: 10px 20px;
-        background-color: royalblue;
-        color: #fff;
-        text-decoration: none;
-        margin-top: 10px;
-        border-radius: 5px;
-      }
-      .view-details-btn:hover {
-        background-color: rgb(60, 96, 206);
-      }
-      .grid-container {
-        display: grid;
-        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-        gap: 20px;
-      }
-    </style>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body>
-    <div class="max-w-7xl mx-auto p-6 bg-white rounded-lg shadow-md">
-      <form method="GET" action="" class="flex items-center space-x-4">
-        <!-- Start Date -->
-        <div class="flex flex-col">
-          <label for="start_date" class="text-sm font-medium text-gray-700">Start Date</label>
-          <input
-            type="date"
-            id="start_date"
-            name="start_date"
-            class="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
-            required
-          />
+  <body class="bg-gray-900">
+    <header class="bg-black shadow-md">
+      <div
+        class="container mx-auto flex items-center justify-between py-4 px-6"
+      >
+        <div class="flex items-center">
+          <div class="text-yellow-500 text-3xl font-bold">Logo</div>
+          <div class="ml-6 relative">
+            <input
+              class="bg-gray-800 text-white rounded-full py-2 px-4 pl-10 focus:outline-none"
+              placeholder="Search any car here"
+              type="text"
+            />
+            <i
+              class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
+            ></i>
+          </div>
         </div>
-
-        <!-- Start Time -->
-        <div class="flex flex-col">
-          <label for="start_time" class="text-sm font-medium text-gray-700">Start Time</label>
-          <input
-            type="time"
-            id="start_time"
-            name="start_time"
-            class="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
-            required
-          />
+        <div class="flex items-center">
+          <i class="fas fa-heart text-gray-500 text-xl mr-6"></i>
+          <i class="fas fa-user-circle text-gray-500 text-xl"></i>
         </div>
-
-        <!-- End Date -->
-        <div class="flex flex-col">
-          <label for="end_date" class="text-sm font-medium text-gray-700">End Date</label>
-          <input
-            type="date"
-            id="end_date"
-            name="end_date"
-            class="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
-            required
-          />
-        </div>
-
-        <!-- End Time -->
-        <div class="flex flex-col">
-          <label for="end_time" class="text-sm font-medium text-gray-700">End Time</label>
-          <input
-            type="time"
-            id="end_time"
-            name="end_time"
-            class="border border-gray-300 rounded-md p-2 focus:ring-2 focus:ring-blue-500 focus:outline-none text-sm"
-            required
-          />
-        </div>
-
-        <!-- Search Button -->
-        <div>
+      </div>
+    </header>
+    <main class="container mx-auto py-8 px-6">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div class="bg-yellow-500 text-black rounded-lg p-6 relative">
+          <h2 class="text-2xl font-bold mb-2">
+            The Premier Choice for Car Rentals.
+          </h2>
+          <p class="mb-4">
+            Effortless car rentals with safety, reliability, and budget-friendly
+            prices.
+          </p>
           <button
-            type="submit"
-            class="bg-blue-500 hover:bg-blue-600 text-white font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
+            class="bg-black text-yellow-500 font-bold py-2 px-4 rounded-full"
           >
-            Search
+            Rental Car
           </button>
-          <div class="logout">
-            <a href="{% url 'signout' %}">
+          <img
+            alt="Green car"
+            class="absolute bottom-0 right-0 w-1/2"
+            height="200"
+            src="https://storage.googleapis.com/a1aa/image/Rlpjd2OYjt4AKZA0Ur7G7JJ2l3vYLsOMF9TGfA9narryyv9JA.jpg"
+            width="400"
+          />
+        </div>
+        <div class="bg-orange-500 text-black rounded-lg p-6 relative">
+          <h2 class="text-2xl font-bold mb-2">
+            Low-cost car rentals made quick and simple.
+          </h2>
+          <p class="mb-4">
+            Offering affordable car rental services with safe and comfortable
+            facilities.
+          </p>
+          <button
+            class="bg-black text-orange-500 font-bold py-2 px-4 rounded-full"
+          >
+            Rental Car
+          </button>
+          <img
+            alt="Red car"
+            class="absolute bottom-0 right-0 w-1/2"
+            height="200"
+            src="https://storage.googleapis.com/a1aa/image/DJOqjKbzeSzkZKuFWNJyJXEG7Osjf4cJliKr4MbnHVunlf2nA.jpg"
+            width="400"
+          />
+        </div>
+      </div>
+      <div class="bg-gray-800 rounded-lg shadow-md mt-8 p-6">
+        <form method="GET" action="" class="flex items-center space-x-4">
+          <!-- Start Date -->
+          <div class="flex flex-col">
+            <label for="start_date" class="text-sm font-medium text-gray-400"
+              >Start Date</label
+            >
+            <input
+              type="date"
+              id="start_date"
+              name="start_date"
+              class="border border-gray-700 bg-gray-700 text-white rounded-md p-2 focus:ring-2 focus:ring-yellow-500 focus:outline-none text-sm"
+              required
+            />
+          </div>
+
+          <!-- Start Time -->
+          <div class="flex flex-col">
+            <label for="start_time" class="text-sm font-medium text-gray-400"
+              >Start Time</label
+            >
+            <input
+              type="time"
+              id="start_time"
+              name="start_time"
+              class="border border-gray-700 bg-gray-700 text-white rounded-md p-2 focus:ring-2 focus:ring-yellow-500 focus:outline-none text-sm"
+              required
+            />
+          </div>
+
+          <!-- End Date -->
+          <div class="flex flex-col">
+            <label for="end_date" class="text-sm font-medium text-gray-400"
+              >End Date</label
+            >
+            <input
+              type="date"
+              id="end_date"
+              name="end_date"
+              class="border border-gray-700 bg-gray-700 text-white rounded-md p-2 focus:ring-2 focus:ring-yellow-500 focus:outline-none text-sm"
+              required
+            />
+          </div>
+
+          <!-- End Time -->
+          <div class="flex flex-col">
+            <label for="end_time" class="text-sm font-medium text-gray-400"
+              >End Time</label
+            >
+            <input
+              type="time"
+              id="end_time"
+              name="end_time"
+              class="border border-gray-700 bg-gray-700 text-white rounded-md p-2 focus:ring-2 focus:ring-yellow-500 focus:outline-none text-sm"
+              required
+            />
+          </div>
+
+          <!-- Search Button -->
+          <div>
+            <button
+              type="submit"
+              class="bg-yellow-500 hover:bg-yellow-600 text-black font-medium py-2 px-4 rounded-md focus:outline-none focus:ring-2 focus:ring-yellow-500 focus:ring-offset-2"
+            >
+              Search
+            </button>
+            <div class="logout">
+              <a
+                href="{% url 'signout' %}"
+                class="text-gray-400 hover:text-white"
+              >
                 <i class="fas fa-sign-out-alt"></i>
                 <span>Logout</span>
-            </a>
-        </div>
-        
-        </div>
-      </form>
-    </div>
-
-    <!-- <div class="header"> -->
-      <!-- <h1>Car Rental System</h1> -->
-    <!-- </div> -->
-    <div class="container">
-      <div class="grid-container">
-        <!-- Loop through the list of cars and display each car item -->
-        {% for car in cars %}
-        <div class="car-item">
-          <img src="{{ car.image.url }}" alt="{{ car.name }}" />
-          <div class="car-details">
-            <h3>{{ car.name }}</h3>
-            <p>Price: {{ car.price }}</p>
-            <a href="{% url 'car_details' car_id=car.id %}" class="view-details-btn">View Details</a>
+              </a>
+            </div>
           </div>
-          <div class="car-info">
-            <h3>{{ car.name }}</h3>
-            <p>Price: {{ car.price }}</p>
-            <a href="{% url 'car_details' car_id=car.id %}" class="view-details-btn">View Details</a>
-          </div>
-        </div>
-        {% endfor %}
+        </form>
       </div>
-    </div>
+      <div class="mt-8">
+        <div class="flex justify-between items-center mb-4">
+          <h3 class="text-xl font-bold text-white">Popular Car</h3>
+          <a class="text-yellow-500" href="#">View All</a>
+        </div>
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+          <!-- Loop through the list of cars and display each car item -->
+          {% for car in cars %}
+          <div class="bg-gray-800 rounded-lg shadow-md p-4">
+            <img
+              alt="{{ car.name }}"
+              class="w-full rounded-lg mb-4"
+              src="{{ car.image.url }}"
+            />
+            <div class="flex justify-between items-center mb-2">
+              <h4 class="text-lg font-bold text-white">{{ car.name }}</h4>
+              <i class="far fa-heart text-gray-500"></i>
+            </div>
+            <p class="text-gray-400 mb-2">Sport</p>
+            <div class="flex justify-between items-center mb-4">
+              <div class="flex items-center">
+                <i class="fas fa-gas-pump text-gray-400 mr-2"></i>
+                <span class="text-white">80L</span>
+              </div>
+              <div class="flex items-center">
+                <i class="fas fa-cogs text-gray-400 mr-2"></i>
+                <span class="text-white">Manual</span>
+              </div>
+              <div class="flex items-center">
+                <i class="fas fa-user text-gray-400 mr-2"></i>
+                <span class="text-white">3 People</span>
+              </div>
+            </div>
+            <div class="flex justify-between items-center">
+              <div>
+                <span class="text-lg font-bold text-white"
+                  >{{ car.price }}</span
+                >
+                <span class="text-gray-400">/ day</span>
+              </div>
+              <a
+                href="{% url 'car_details' car_id=car.id %}"
+                class="bg-yellow-500 text-black py-2 px-4 rounded-full"
+                >Rent Now</a
+              >
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </main>
   </body>
 </html>

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Hidable Sidebar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+      /* Transition for smooth sliding */
+      .sidebar {
+        transition: transform 0.3s ease-in-out;
+      }
+
+      /* Hidden state for sidebar */
+      .sidebar-hidden {
+        transform: translateX(-100%);
+      }
+
+      /* Button styling for the corner arrow when hidden */
+      .toggle-button {
+        transition: opacity 0.3s ease;
+      }
+    </style>
+  </head>
+  <body class="flex h-screen">
+    <!-- Sidebar -->
+    <div
+      id="sidebar"
+      class="sidebar bg-gray-900 text-white w-64 h-full fixed top-0 left-0 shadow-md"
+    >
+      <div class="p-4 flex items-center justify-between">
+        <span class="text-xl font-bold">Site Logo</span>
+        <button id="toggleSidebar" class="text-white hover:text-gray-400">
+          ←
+        </button>
+      </div>
+      <nav class="mt-4">
+        <a
+          href="#"
+          class="block px-4 py-2 text-gray-300 hover:bg-gray-800 hover:text-white"
+          >Home</a
+        >
+        <a
+          href="#"
+          class="block px-4 py-2 text-gray-300 hover:bg-gray-800 hover:text-white"
+          >About</a
+        >
+        <a
+          href="#"
+          class="block px-4 py-2 text-gray-300 hover:bg-gray-800 hover:text-white"
+          >Services</a
+        >
+        <a
+          href="#"
+          class="block px-4 py-2 text-gray-300 hover:bg-gray-800 hover:text-white"
+          >Contact</a
+        >
+      </nav>
+      <div class="absolute bottom-4 left-4">
+        <span class="block text-sm text-gray-400">User Plan: Free</span>
+        <button
+          class="mt-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded"
+        >
+          Logout
+        </button>
+      </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 ml-64 p-4">
+      <h1 class="text-2xl font-bold">Main Content Area</h1>
+      <p class="mt-2">This is where your main content will go.</p>
+    </div>
+
+    <!-- Small arrow button for hidden sidebar -->
+    <button
+      id="smallArrow"
+      class="toggle-button bg-gray-900 text-white fixed top-1/2 left-2 px-2 py-1 rounded-full shadow hidden"
+    >
+      →
+    </button>
+
+    <script>
+      // Elements
+      const sidebar = document.getElementById("sidebar");
+      const toggleSidebar = document.getElementById("toggleSidebar");
+      const smallArrow = document.getElementById("smallArrow");
+      const mainContent = document.querySelector(".flex-1");
+
+      // Toggle sidebar visibility
+      toggleSidebar.addEventListener("click", () => {
+        sidebar.classList.add("sidebar-hidden");
+        mainContent.style.marginLeft = "0";
+        smallArrow.classList.remove("hidden");
+      });
+
+      // Show sidebar when the small arrow is clicked
+      smallArrow.addEventListener("click", () => {
+        sidebar.classList.remove("sidebar-hidden");
+        mainContent.style.marginLeft = "16rem"; // Width of the sidebar
+        smallArrow.classList.add("hidden");
+      });
+    </script>
+  </body>
+</html>
