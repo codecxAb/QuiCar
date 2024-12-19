@@ -119,46 +119,47 @@
           <!-- Loop through the list of cars and display each car item -->
           {% for car in cars %}
           <div class="bg-gray-800 rounded-lg shadow-md p-4">
-            <img
-              alt="{{ car.name }}"
-              class="w-full rounded-lg mb-4"
-              src="{{ car.image.url }}"
-            />
-            <div class="flex justify-between items-center mb-2">
-              <h4 class="text-lg font-bold text-white">{{ car.name }}</h4>
-              <i class="far fa-heart text-gray-500"></i>
-            </div>
-            <p class="text-gray-400 mb-2">Sport</p>
-            <div class="flex justify-between items-center mb-4">
-              <div class="flex items-center">
-                <i class="fas fa-gas-pump text-gray-400 mr-2"></i>
-                <span class="text-white">80L</span>
+              <img
+                  alt="{{ car.name }}"
+                  class="w-full rounded-lg mb-4"
+                  src="{{ car.image.url }}"
+              />
+              <div class="flex justify-between items-center mb-2">
+                  <h4 class="text-lg font-bold text-white">{{ car.name }}</h4>
+                  <i class="far fa-heart text-gray-500"></i>
               </div>
-              <div class="flex items-center">
-                <i class="fas fa-cogs text-gray-400 mr-2"></i>
-                <span class="text-white">Manual</span>
+              <p class="text-gray-400 mb-2">Sport</p>
+              <div class="flex justify-between items-center mb-4">
+                  <div class="flex items-center">
+                      <i class="fas fa-gas-pump text-gray-400 mr-2"></i>
+                      <span class="text-white">80L</span>
+                  </div>
+                  <div class="flex items-center">
+                      <i class="fas fa-cogs text-gray-400 mr-2"></i>
+                      <span class="text-white">Manual</span>
+                  </div>
+                  <div class="flex items-center">
+                      <i class="fas fa-user text-gray-400 mr-2"></i>
+                      <span class="text-white">3 People</span>
+                  </div>
               </div>
-              <div class="flex items-center">
-                <i class="fas fa-user text-gray-400 mr-2"></i>
-                <span class="text-white">3 People</span>
+              <div class="flex justify-between items-center">
+                  <div>
+                      <span class="text-lg font-bold text-white">{{ car.price }}</span>
+                      <span class="text-gray-400">/ day</span>
+                  </div>
+                  <!-- Update the URL to use car.car_id instead of car.id -->
+                  <a
+                      href="{% url 'car_details' car_id=car.car_id %}"
+                      class="bg-yellow-500 text-black py-2 px-4 rounded-full"
+                  >
+                      Rent Now
+                  </a>
               </div>
-            </div>
-            <div class="flex justify-between items-center">
-              <div>
-                <span class="text-lg font-bold text-white"
-                  >{{ car.price }}</span
-                >
-                <span class="text-gray-400">/ day</span>
-              </div>
-              <a
-                href="{% url 'car_details' car_id=car.id %}"
-                class="bg-yellow-500 text-black py-2 px-4 rounded-full"
-                >Rent Now</a
-              >
-            </div>
           </div>
           {% endfor %}
-        </div>
+      </div>
+      
       </div>
     </main>
   </body>

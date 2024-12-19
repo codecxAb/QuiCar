@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse
+from django.http import HttpResponse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
@@ -8,11 +9,13 @@ from .forms import RentalCarForm
 from .models import Transaction, RentalCar
 from user_auth.models import CustomUser  # Using CustomUser instead of Dealer now
 from django.utils import timezone
+import random
 
 # Home view (just a placeholder for now)
 def home(request):
     return HttpResponse("Hello World, manage car folder is a great feature!")
-
+@csrf_protect
+@login_required
 def car_add(request):
     return render(request, 'add_car.html')
 
@@ -25,15 +28,20 @@ def carList(request):
 
 # Car details view
 def carDetails(request, car_id):
-    car = get_object_or_404(RentalCar, id=car_id)
+    # Query using car_id, since it’s a string and the unique identifier for each car
+    car = get_object_or_404(RentalCar, car_id=car_id)
+    
+    # Redirect to sign-in if user is not authenticated
     if not request.user.is_authenticated:
         return redirect(f"{reverse('sign_in')}?next={request.path}")
+    
     return render(request, 'car_details.html', {'car': car})
 
 # Add car view (for dealers)
 @csrf_protect
 @login_required
 def add_car(request):
+    print("add_car view called")
     try:
         # Check if the logged-in user is a dealer (based on user_type)
         if request.user.user_type != 'dealer':
@@ -44,23 +52,20 @@ def add_car(request):
         return redirect('home')
 
     if request.method == 'POST':
-        form = RentalCarForm(request.POST, request.FILES)  # Make sure to handle FILES for image
+        print("POST request received")
+        form = RentalCarForm(request.POST, request.FILES)
 
         if form.is_valid():
-            # Debugging output
             print("Form is valid, saving car...")
-
+            
             new_car = form.save(commit=False)  # Don't save yet, to add extra fields
             new_car.dealer = request.user  # Link the car to the logged-in user (dealer)
             new_car.save()
-
-            # Debugging output
             print(f"Car {new_car.name} has been added to the database.")
-
             messages.success(request, f'{new_car.name} has been added successfully!')
             return redirect('dealer_dashboard')  # Redirect to dealer's dashboard after adding the car
         else:
-            # If the form is not valid, log the errors
+            print("Form is NOT valid")
             print("Form errors:", form.errors)
             messages.error(request, "There was an error in your form.")
     else:
@@ -68,7 +73,7 @@ def add_car(request):
         form = RentalCarForm()
 
     return render(request, 'add_car.html', {'form': form})
-# # Rent a car and create a transaction
+
 # @login_required
 # @csrf_protect
 # def initiate_transaction(request, car_id):
