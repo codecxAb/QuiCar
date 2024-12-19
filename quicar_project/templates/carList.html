@@ -14,26 +14,24 @@
     />
   </head>
   <body class="bg-gray-900">
-    <header class="bg-black shadow-md">
+    <header class="bg-black shadow">
       <div
-        class="container mx-auto flex items-center justify-between py-4 px-6"
+        class="container mx-auto px-4 py-4 flex justify-between items-center"
       >
-        <div class="flex items-center">
-          <div class="text-yellow-500 text-3xl font-bold">Logo</div>
-          <div class="ml-6 relative">
-            <input
-              class="bg-gray-800 text-white rounded-full py-2 px-4 pl-10 focus:outline-none"
-              placeholder="Search any car here"
-              type="text"
-            />
-            <i
-              class="fas fa-search absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-500"
-            ></i>
-          </div>
-        </div>
-        <div class="flex items-center">
-          <i class="fas fa-heart text-gray-500 text-xl mr-6"></i>
-          <i class="fas fa-user-circle text-gray-500 text-xl"></i>
+        <div class="text-2xl font-bold text-yellow-500">QUICAR</div>
+        <nav class="space-x-4">
+          <a class="text-gray-300 hover:text-yellow-500" href="#"> Rent </a>
+          <a class="text-gray-300 hover:text-yellow-500" href="#"> Share </a>
+          <a class="text-gray-300 hover:text-yellow-500" href="#"> Ride </a>
+          <a class="text-gray-300 hover:text-yellow-500" href="#"> Service </a>
+        </nav>
+        <div class="space-x-4">
+          <a
+            class="bg-yellow-500 text-black px-4 py-2 rounded"
+            href="{% url 'signout' %}"
+          >
+            Logout
+          </a>
         </div>
       </div>
     </header>
@@ -52,13 +50,6 @@
           >
             Rental Car
           </button>
-          <img
-            alt="Green car"
-            class="absolute bottom-0 right-0 w-1/2"
-            height="200"
-            src="https://storage.googleapis.com/a1aa/image/Rlpjd2OYjt4AKZA0Ur7G7JJ2l3vYLsOMF9TGfA9narryyv9JA.jpg"
-            width="400"
-          />
         </div>
         <div class="bg-orange-500 text-black rounded-lg p-6 relative">
           <h2 class="text-2xl font-bold mb-2">
@@ -73,19 +64,16 @@
           >
             Rental Car
           </button>
-          <img
-            alt="Red car"
-            class="absolute bottom-0 right-0 w-1/2"
-            height="200"
-            src="https://storage.googleapis.com/a1aa/image/DJOqjKbzeSzkZKuFWNJyJXEG7Osjf4cJliKr4MbnHVunlf2nA.jpg"
-            width="400"
-          />
         </div>
       </div>
       <div class="bg-gray-800 rounded-lg shadow-md mt-8 p-6">
-        <form method="GET" action="" class="flex items-center space-x-4">
+        <form
+          method="GET"
+          action=""
+          class="flex items-center justify-between space-x-4"
+        >
           <!-- Start Date -->
-          <div class="flex flex-col">
+          <div class="flex items-center gap-1">
             <label for="start_date" class="text-sm font-medium text-gray-400"
               >Start Date</label
             >
@@ -98,22 +86,8 @@
             />
           </div>
 
-          <!-- Start Time -->
-          <div class="flex flex-col">
-            <label for="start_time" class="text-sm font-medium text-gray-400"
-              >Start Time</label
-            >
-            <input
-              type="time"
-              id="start_time"
-              name="start_time"
-              class="border border-gray-700 bg-gray-700 text-white rounded-md p-2 focus:ring-2 focus:ring-yellow-500 focus:outline-none text-sm"
-              required
-            />
-          </div>
-
           <!-- End Date -->
-          <div class="flex flex-col">
+          <div class="flex items-center gap-1">
             <label for="end_date" class="text-sm font-medium text-gray-400"
               >End Date</label
             >
@@ -126,21 +100,6 @@
             />
           </div>
 
-          <!-- End Time -->
-          <div class="flex flex-col">
-            <label for="end_time" class="text-sm font-medium text-gray-400"
-              >End Time</label
-            >
-            <input
-              type="time"
-              id="end_time"
-              name="end_time"
-              class="border border-gray-700 bg-gray-700 text-white rounded-md p-2 focus:ring-2 focus:ring-yellow-500 focus:outline-none text-sm"
-              required
-            />
-          </div>
-
-          <!-- Search Button -->
           <div>
             <button
               type="submit"
@@ -148,15 +107,6 @@
             >
               Search
             </button>
-            <div class="logout">
-              <a
-                href="{% url 'signout' %}"
-                class="text-gray-400 hover:text-white"
-              >
-                <i class="fas fa-sign-out-alt"></i>
-                <span>Logout</span>
-              </a>
-            </div>
           </div>
         </form>
       </div>
