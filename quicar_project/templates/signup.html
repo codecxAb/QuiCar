@@ -87,51 +87,103 @@
         <h2 class="text-2xl font-bold text-yellow-500 text-center mb-6">
           Sign Up to Quicar
         </h2>
-        <form method="POST">
-          {% csrf_token %}
-          <div class="mb-4">
-            <label for="email" class="block text-gray-300">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              required
-            />
-          </div>
-          <div class="mb-4">
-            <label for="password" class="block text-gray-300">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
-              required
-            />
-          </div>
+       <!-- signup.html -->
 
-          <div class="mb-4">
-            <label for="user_type" class="block text-gray-300">Are you a:</label>
-            <div class="flex items-center space-x-4">
-              <label class="text-gray-300">
-                <input type="radio" name="user_type" value="customer" checked class="mr-2" /> Customer
-              </label>
-              <label class="text-gray-300">
-                <input type="radio" name="user_type" value="dealer" class="mr-2" /> Dealer
-              </label>
-            </div>
-          </div>
+<form method="POST">
+  {% csrf_token %}
+  
+  <!-- Email Field -->
+  <div class="mb-4">
+      <label for="email" class="block text-gray-300">Email</label>
+      <input
+          type="email"
+          id="email"
+          name="email"
+          class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+          required
+      />
+  </div>
 
-          <button
-            type="submit"
-            class="w-full px-4 py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-600"
-          >
-            Sign Up
-          </button>
-          <p class="mt-4 text-center text-sm text-gray-300">
-            Have an account?
-            <a href="{% url 'signin' %}" class="text-yellow-500 hover:underline">Sign In</a>
-          </p>
+  <!-- Password Field -->
+  <div class="mb-4">
+      <label for="password" class="block text-gray-300">Password</label>
+      <input
+          type="password"
+          id="password"
+          name="password"
+          class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+          required
+      />
+  </div>
+
+  <!-- User Type Selection -->
+  <div class="mb-4">
+      <label for="user_type" class="block text-gray-300">Are you a:</label>
+      <div class="flex items-center space-x-4">
+          <label class="text-gray-300">
+              <input type="radio" name="user_type" value="customer" checked class="mr-2" /> Customer
+          </label>
+          <label class="text-gray-300">
+              <input type="radio" name="user_type" value="dealer" class="mr-2" /> Dealer
+          </label>
+      </div>
+  </div>
+
+  <!-- Dealer Fields (Hidden by default) -->
+  <div id="dealer-fields" style="display:none;">
+      <div class="mb-4">
+          <label for="upi_id" class="block text-gray-300">UPI ID</label>
+          <input
+              type="text"
+              id="upi_id"
+              name="upi_id"
+              class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              placeholder="Dealer UPI ID"
+              required
+          />
+      </div>
+
+      <div class="mb-4">
+          <label for="contact_number" class="block text-gray-300">Contact Number</label>
+          <input
+              type="text"
+              id="contact_number"
+              name="contact_number"
+              class="w-full px-4 py-2 border border-gray-600 rounded-lg bg-gray-700 text-white focus:outline-none focus:ring-2 focus:ring-yellow-500"
+              placeholder="Contact Number"
+              required
+          />
+      </div>
+  </div>
+
+  <!-- Submit Button -->
+  <button
+      type="submit"
+      class="w-full px-4 py-2 bg-yellow-500 text-black rounded-lg hover:bg-yellow-600"
+  >
+      Sign Up
+  </button>
+
+  <!-- Sign In Link -->
+  <p class="mt-4 text-center text-sm text-gray-300">
+      Have an account?
+      <a href="{% url 'signin' %}" class="text-yellow-500 hover:underline">Sign In</a>
+  </p>
+</form>
+
+<script>
+  // Toggle the dealer fields based on the selected user type
+  document.querySelectorAll('[name="user_type"]').forEach(radio => {
+      radio.addEventListener('change', function() {
+          if (this.value === 'dealer') {
+              document.getElementById('dealer-fields').style.display = 'block';
+          } else {
+              document.getElementById('dealer-fields').style.display = 'none';
+          }
+      });
+  });
+</script>
+
         </form>
       </div>
     </div>

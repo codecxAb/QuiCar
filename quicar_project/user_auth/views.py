@@ -3,6 +3,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.models import User
 from django.contrib import messages
 from django.urls import reverse
+from .models import Dealer
 
 def home(request):
     return render(request, 'home.html')
@@ -39,8 +40,21 @@ def signup(request):
 
         # After successful signup, redirect to the appropriate page
         if user_type == 'dealer':
+            upi_id = request.POST['upi_id']  # Make sure to add this field in your signup form
+            contact_number = request.POST['contact_number']  # Similarly for contact_number
+            email = request.POST['email']
+            
+            # Create the Dealer object
+            dealer = Dealer.objects.create(
+                user=user,
+                upi_id=upi_id,
+                contact_number=contact_number,
+                email=email
+            )
+            dealer.save()
             # You can add extra fields for dealer like a business name etc. if needed
             messages.success(request, 'Account created successfully! Welcome to Our dealer community.')
+            
 
             return redirect('dealer_dashboard')  # Redirect dealer to the dealer dashboard
         else:

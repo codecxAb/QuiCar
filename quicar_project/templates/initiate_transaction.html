@@ -1,0 +1,11 @@
+<!-- initiate_transaction.html -->
+<form method="post" action="{% url 'initiate_transaction' car.id %}">
+    {% csrf_token %}
+    <input type="date" name="start_date" required>
+    <input type="date" name="end_date" required>
+    <input type="number" name="rental_duration" required>
+    <button type="submit">Confirm Rental</button>
+</form>
+
+<!-- After the user has confirmed the transaction, show the UPI ID: -->
+<p>Make the payment to UPI ID: {{ upi_id }}</p>
