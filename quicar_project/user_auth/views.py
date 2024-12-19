@@ -11,26 +11,50 @@ def home(request):
     return render(request, 'home.html')
 
 # Sign in view (customer or dealer)
+from django.contrib.auth import authenticate, login
+from django.shortcuts import render, redirect
+from django.contrib import messages
+from .models import Dealer  # Import the Dealer model to check if the user is a dealer
+
 def signin(request):
     if request.method == 'POST':
         email = request.POST['email']
         password = request.POST['password']
+        user_type = request.POST.get('user_type')  # Get the user type (customer or dealer)
+
+        # Authenticate the user based on email and password
         user = authenticate(request, username=email, password=password)
+        dealer = authenticate(request, username=email, password=password)   
         
-        if user is not None:
+
+        if user is not None or dealer is not None:
+            # Successfully authenticated, check user type
             login(request, user)
-            # Check if the user is a dealer or customer
-            try:
-                dealer = Dealer.objects.get(user=user)
-                # Redirect to dealer dashboard if user is a dealer
-                return redirect('dealer_dashboard')
-            except Dealer.DoesNotExist:
-                # Redirect to the customer car list if user is a customer
+
+            if user_type == "customer":
+                # Redirect customer to car list
                 return redirect('carList')
+            elif user_type == "dealer":
+                # Check if the user is actually a dealer
+                try:
+                    # We assume the user should have a related Dealer object
+                    dealer_details = Dealer.objects.get(user=dealer)
+                    # Redirect to the dealer dashboard if user is a dealer
+                    return redirect('dealer_dashboard')
+                except Dealer.DoesNotExist:
+                    # If no dealer profile is found, show an error message
+                    messages.error(request, "User is not registered as a dealer.")
+                    return render(request, 'signin.html')
+            else:
+                # If the user_type is neither customer nor dealer, show error
+                messages.error(request, "Invalid user type.")
+                return render(request, 'signin.html')
         else:
+            # If authentication fails, show error message
             messages.error(request, 'Invalid email or password')
-    
+
     return render(request, 'signin.html')
+
 
 # Signup view (create user and handle dealer logic)
 def signup(request):

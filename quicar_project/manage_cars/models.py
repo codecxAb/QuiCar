@@ -12,6 +12,8 @@ from user_auth.models import Dealer
 class RentalCar(models.Model):
     car_id = models.PositiveIntegerField(unique=True, null=True, blank=True)
     name = models.CharField(max_length=255)
+    dealer = models.ForeignKey(Dealer, on_delete=models.CASCADE)
+
     image = models.ImageField(upload_to='car_images/')
     price = models.DecimalField(max_digits=10, decimal_places=2)
     description = models.TextField()
@@ -66,15 +68,17 @@ class Transaction(models.Model):
         ('Cancelled', 'Cancelled'),
         ('Paid', 'Paid'),
     ]
-    status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='In Progress')
+    # status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='In Progress')
     
     PAYMENT_STATUS_CHOICES = [
         ('Pending', 'Pending'),
         ('Paid', 'Paid'),
         ('Failed', 'Failed'),
     ]
-    payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='Pending')
-    
+    # payment_status = models.CharField(max_length=20, choices=PAYMENT_STATUS_CHOICES, default='Pending')
+    status = models.CharField(max_length=20, choices=[('In Progress', 'In Progress'), ('Completed', 'Completed'), ('Cancelled', 'Cancelled')], default='In Progress')
+    payment_status = models.CharField(max_length=20, choices=[('Pending', 'Pending'), ('Paid', 'Paid')], default='Pending')
+        
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 

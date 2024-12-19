@@ -2,7 +2,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Sign In</title>
+    <title>Sign In - Quicar</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link
       href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap"
@@ -21,12 +21,18 @@
         alt="Luxury car"
         class="absolute top-0 left-0 w-full h-full object-cover opacity-20"
       />
-      <div
-        class="w-full max-w-md bg-black bg-opacity-80 p-8 rounded-lg shadow-lg relative z-10"
-      >
+      <div class="w-full max-w-md bg-black bg-opacity-80 p-8 rounded-lg shadow-lg relative z-10">
         <h2 class="text-2xl font-bold text-yellow-500 text-center mb-6">
           Sign In to Quicar
         </h2>
+        <!-- Display error messages if any -->
+        {% if messages %}
+          <div class="mb-4">
+            {% for message in messages %}
+              <div class="text-red-500 text-sm">{{ message }}</div>
+            {% endfor %}
+          </div>
+        {% endif %}
         <form method="POST">
           {% csrf_token %}
           <div class="mb-4">
@@ -51,9 +57,7 @@
           </div>
 
           <div class="mb-4">
-            <label for="user_type" class="block text-gray-300"
-              >Are you a:</label
-            >
+            <label for="user_type" class="block text-gray-300">Are you a:</label>
             <div class="flex items-center space-x-4">
               <label class="text-gray-300">
                 <input
@@ -85,9 +89,9 @@
           </button>
           <p class="mt-4 text-center text-sm text-gray-300">
             Don't have an account?
-            <a href="{% url 'signup' %}" class="text-yellow-500 hover:underline"
-              >Sign Up</a
-            >
+            <a href="{% url 'signup' %}" class="text-yellow-500 hover:underline">
+              Sign Up
+            </a>
           </p>
         </form>
       </div>

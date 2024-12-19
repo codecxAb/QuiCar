@@ -9,7 +9,7 @@ def create_dealer(sender, instance, created, **kwargs):
     if created:
         # Create a dealer linked to the newly created user
         Dealer.objects.create(
-            user=instance,
+            # user=instance,
             name=instance.username,  # Default name, you can customize this
             upi_id="default_upi_id"  # You can use a default or custom logic to set the UPI ID
         )
