@@ -3,60 +3,75 @@ from django.urls import reverse
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import csrf_protect
 from django.contrib import messages
-# from .models import RentalCar
-from .forms import RentalCarForm
 from django.http import JsonResponse
+from .forms import RentalCarForm
 from .models import Transaction, RentalCar
-from user_auth.models import Dealer 
-from user_auth.views import dealer_dashboard,home
-from django.contrib.auth.decorators import login_required
+from user_auth.models import CustomUser  # Using CustomUser instead of Dealer now
+from django.utils import timezone
 
+# Home view (just a placeholder for now)
 def home(request):
-    return HttpResponse("Hello World manage car folder a achi")
+    return HttpResponse("Hello World, manage car folder is a great feature!")
 
+def car_add(request):
+    return render(request, 'add_car.html')
+
+# List all cars
 @csrf_protect
 @login_required
 def carList(request):
     cars = RentalCar.objects.all()
     return render(request, 'carList.html', {'cars': cars})
 
+# Car details view
 def carDetails(request, car_id):
     car = get_object_or_404(RentalCar, id=car_id)
     if not request.user.is_authenticated:
         return redirect(f"{reverse('sign_in')}?next={request.path}")
     return render(request, 'car_details.html', {'car': car})
 
-def car_add(request):
-    return render(request, 'add_car.html')
+# Add car view (for dealers)
 @csrf_protect
 @login_required
-# @login_required
 def add_car(request):
     try:
-        # Check if the logged-in user's email exists in the Dealer model
-        dealer = Dealer.objects.get(email=request.user.email)
-    except Dealer.DoesNotExist:
-        # If the user is not a dealer, show an error message and redirect
-        messages.error(request, 'You must be a dealer to add cars.')
-        return redirect('home')  # Redirect to car list if not a dealer
+        # Check if the logged-in user is a dealer (based on user_type)
+        if request.user.user_type != 'dealer':
+            messages.error(request, 'You must be a dealer to add cars.')
+            return redirect('home')  # Redirect to home if not a dealer
+    except CustomUser.DoesNotExist:
+        messages.error(request, 'Dealer account not found.')
+        return redirect('home')
 
-    # If the user is a dealer, proceed with adding the car
     if request.method == 'POST':
-        form = RentalCarForm(request.POST, request.FILES)
+        form = RentalCarForm(request.POST, request.FILES)  # Make sure to handle FILES for image
+
         if form.is_valid():
-            new_car = form.save(commit=False)
-            new_car.dealer = dealer  # Link the car to the dealer
+            # Debugging output
+            print("Form is valid, saving car...")
+
+            new_car = form.save(commit=False)  # Don't save yet, to add extra fields
+            new_car.dealer = request.user  # Link the car to the logged-in user (dealer)
             new_car.save()
+
+            # Debugging output
+            print(f"Car {new_car.name} has been added to the database.")
+
             messages.success(request, f'{new_car.name} has been added successfully!')
             return redirect('dealer_dashboard')  # Redirect to dealer's dashboard after adding the car
+        else:
+            # If the form is not valid, log the errors
+            print("Form errors:", form.errors)
+            messages.error(request, "There was an error in your form.")
     else:
+        print("Creating a new form... because it is not post")
         form = RentalCarForm()
 
     return render(request, 'add_car.html', {'form': form})
-
+# # Rent a car and create a transaction
 # @login_required
+# @csrf_protect
 # def initiate_transaction(request, car_id):
-#     """ Initiates a rental transaction. """
 #     try:
 #         car = RentalCar.objects.get(id=car_id)
 #     except RentalCar.DoesNotExist:
@@ -65,18 +80,23 @@ def add_car(request):
 #     if request.method == 'POST':
 #         start_date = request.POST.get('start_date')
 #         end_date = request.POST.get('end_date')
-#         rental_duration = request.POST.get('rental_duration')
 
-#         if not all([start_date, end_date, rental_duration]):
+#         # Ensure rental duration is specified
+#         if not all([start_date, end_date]):
 #             return JsonResponse({'error': 'Missing required fields'}, status=400)
 
-#         try:
-#             rental_duration = int(rental_duration)
-#         except ValueError:
+#         # Ensure the car is available during the requested period
+#         if not Transaction.is_car_available(car, start_date, end_date):
+#             return JsonResponse({'error': 'Car is not available for the selected dates'}, status=400)
+
+#         # Calculate rental duration and total cost
+#         rental_duration = (timezone.datetime.strptime(end_date, '%Y-%m-%d') - timezone.datetime.strptime(start_date, '%Y-%m-%d')).days
+#         if rental_duration <= 0:
 #             return JsonResponse({'error': 'Invalid rental duration'}, status=400)
 
 #         total_cost = car.rental_rate * rental_duration
 
+#         # Create the transaction
 #         transaction = Transaction.objects.create(
 #             user=request.user,
 #             car=car,
@@ -85,28 +105,37 @@ def add_car(request):
 #             rental_duration=rental_duration,
 #             total_cost=total_cost,
 #         )
+#         transaction.save()
 
+#         # Initiate payment (UPI ID from dealer)
 #         upi_id = transaction.initiate_payment()
 
 #         return JsonResponse({'upi_id': upi_id, 'transaction_id': transaction.id})
 #     else:
 #         return JsonResponse({'error': 'Invalid request method'}, status=405)
 
+# # Confirm the payment after the user completes it manually
 # @login_required
+# @csrf_protect
 # def confirm_payment(request, transaction_id):
-#     """ Confirms the payment once the user has made the payment manually via UPI. """
 #     try:
 #         transaction = Transaction.objects.get(id=transaction_id)
 #     except Transaction.DoesNotExist:
 #         return JsonResponse({'error': 'Transaction not found'}, status=404)
 
+#     if transaction.payment_status == 'Paid':
+#         return JsonResponse({'error': 'Payment already confirmed'}, status=400)
+
+#     # Confirm the payment
 #     transaction.payment_status = 'Paid'
 #     transaction.status = 'Completed'
 
+#     # Mark car as unavailable
 #     car = RentalCar.objects.get(id=transaction.car.id)
 #     car.availability_status = False
 #     car.save()
 
 #     transaction.save()
 
-#     return redirect('transaction_success')
+#     # Redirect to transaction success page
+#     return redirect('transaction_success', transaction_id=transaction.id)
