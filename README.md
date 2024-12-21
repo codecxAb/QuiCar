@@ -82,4 +82,4 @@ This project is licensed under the MIT License. See the `LICENSE` file for more 
 ---
 
 ### Contact 📬
-For any queries or feedback, connect with me on [LinkedIn](https://linkedin.com/in/anurag).
+For any queries or feedback, connect with me on [LinkedIn](https://www.linkedin.com/in/basu-anurag/).
