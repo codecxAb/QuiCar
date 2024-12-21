@@ -24,6 +24,13 @@ A **Django-powered** web application for managing a car rental business, designe
 ### 5. **Most Rented Areas**
 - Highlights areas with the highest rental activities.
 
+### Screenshots
+![carlist](carList.JPG)
+![carDetails](carDetails.JPG)
+![dashboard_client](dashboard_client.png)
+![dealer](dealer.png)
+  
+
 
 
 ## Technology Stack 💻
@@ -39,6 +46,7 @@ A **Django-powered** web application for managing a car rental business, designe
 - **SQLite**: Default database for handling data.
 
 ---
+
 
 ## Setup & Installation 🛠️
 
