@@ -13,7 +13,7 @@ def generate_random_car_id():
 
 # RentalCar Model (Car Rental)
 class RentalCar(models.Model):
-    car_id = models.AutoField(primary_key=True,default=generate_random_car_id )
+    car_id = models.AutoField(primary_key=True)#default=generate_random_car_id
     name = models.CharField(max_length=255)
     dealer = models.ForeignKey('user_auth.CustomUser', on_delete=models.CASCADE, related_name="cars", limit_choices_to={'user_type': 'dealer'})
     image = models.ImageField(upload_to='car_images/')
