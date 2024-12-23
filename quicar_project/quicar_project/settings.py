@@ -37,10 +37,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    # "quicar_app",
     "manage_cars",
     "user_auth",
-    "ai",
 ]
 
 MIDDLEWARE = [
@@ -119,10 +117,10 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
-STATIC_URL = '/static/'  # This tells Django where to look for static files
-STATICFILES_DIRS = [
-    BASE_DIR / "static",  # This is where Django will look for additional static files
-]
+# STATIC_URL = '/static/'  # This tells Django where to look for static files
+# STATICFILES_DIRS = [
+#     BASE_DIR / "static",  # This is where Django will look for additional static files
+# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -134,4 +132,9 @@ import os
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 AUTH_USER_MODEL = 'user_auth.CustomUser'
+RAZORPAY_KEY_ID = "rzp_test_MzMtKFul81D0uc"
+RAZORPAY_KEY_SECRET = "TfMKXtCu80qGfEyHbTpxMPAE"
+

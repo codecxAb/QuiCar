@@ -55,9 +55,14 @@
           {% endif %}
           <!-- Rent Button -->
           <button
+            id="rent-now-button"
             class="mt-6 bg-blue-600 hover:bg-blue-700 text-white font-semibold px-6 py-2 rounded-lg shadow"
-            onclick="window.location.href='{% url 'add_car' car_id=car.car_id %}'"
-          >Rent Now</button>
+            data-car-id="{{ car.car_id }}"
+            data-rental-rate="{{ car.rental_rate }}"
+            data-rental-duration="{{ car.rental_duration }}"
+          >
+            Rent Now
+          </button>
         </div>
       </div>
 
@@ -87,5 +92,77 @@
         </div>
       </div>
     </div>
+
+    <!-- Razorpay Integration -->
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
+    <script>
+      document.getElementById("rent-now-button").addEventListener("click", async function () {
+        const carId = this.dataset.carId;
+        const rentalRate = parseFloat(this.dataset.rentalRate);  // Rental rate from button data attribute
+        const rentalDuration = parseInt(this.dataset.rentalDuration);  // Rental duration from button data attribute
+        const amount = rentalRate * rentalDuration;  // Calculate the total amount dynamically
+
+        console.log("Rent Now button clicked!"); // Debug: Button click triggered
+        console.log("Car ID:", carId); // Debug: Check if carId is correctly fetched
+        console.log("Rental Rate:", rentalRate); // Debug: Check rental rate
+        console.log("Rental Duration:", rentalDuration); // Debug: Check rental duration
+        console.log("Total Amount:", amount); // Debug: Check calculated amount
+
+        try {
+          // Step 1: Send a POST request to create the Razorpay order
+          const response = await fetch(`/manage_cars/create_order/${carId}/`, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ amount: amount }),
+          });
+
+          console.log("Fetch response:", response); // Debug: Log the response object
+
+          if (!response.ok) {
+            throw new Error(`HTTP error! Status: ${response.status}`);
+          }
+
+          const data = await response.json();
+          console.log("Response data:", data); // Debug: Log the JSON response
+
+          if (data.error) {
+            alert("Server error: " + data.error);
+            return;
+          }
+
+          // Step 2: Initialize Razorpay payment modal
+          const options = {
+            key: data.key_id, // Razorpay Key ID
+            amount: data.amount * 100, // Amount in paise
+            currency: data.currency,
+            name: "Quicar Project",
+            description: "Car Rental Payment",
+            order_id: data.order_id,
+            handler: function (response) {
+              console.log("Payment successful:", response); // Debug: Log payment response
+              alert("Payment successful! Payment ID: " + response.razorpay_payment_id);
+            },
+            prefill: {
+              name: "hitesh", // Pre-fill customer's name
+              email: "hitesh@gmail.com", // Pre-fill customer's email
+              contact: "9999999999", // Pre-fill customer's phone
+            },
+            theme: {
+              color: "#3399cc",
+            },
+          };
+
+          console.log("Razorpay options initialized:", options); // Debug: Log Razorpay options
+
+          const rzp = new Razorpay(options);
+          rzp.open();
+        } catch (error) {
+          console.error("Error occurred:", error); // Debug: Log errors
+          alert("An error occurred: " + error.message);
+        }
+      });
+    </script>
   </body>
 </html>

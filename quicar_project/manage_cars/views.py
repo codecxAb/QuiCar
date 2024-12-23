@@ -10,6 +10,67 @@ from .models import Transaction, RentalCar
 from user_auth.models import CustomUser  # Using CustomUser instead of Dealer now
 from django.utils import timezone
 import random
+import razorpay
+from django.conf import settings
+from django.http import JsonResponse, HttpResponseBadRequest
+from django.views.decorators.csrf import csrf_exempt
+from .models import RentalCar
+
+razorpay_client = razorpay.Client(auth=(settings.RAZORPAY_KEY_ID, settings.RAZORPAY_KEY_SECRET))
+
+@csrf_exempt
+def create_order(request, car_id):
+    if request.method == "POST":
+        try:
+            import json
+            data = json.loads(request.body)
+            amount = data.get("amount", 0)
+
+            # Ensure car exists
+            car = RentalCar.objects.get(car_id=car_id)
+
+            # Create Razorpay order
+            razorpay_order = razorpay_client.order.create({
+                "amount": int(amount) * 100,  # Amount in paise
+                "currency": "INR",
+                "payment_capture": "1",
+            })
+
+            return JsonResponse({
+                "order_id": razorpay_order['id'],
+                "key_id": settings.RAZORPAY_KEY_ID,
+                "amount": amount,
+                "currency": "INR",
+            })
+        except RentalCar.DoesNotExist:
+            return HttpResponseBadRequest({"error": "Car not found"})
+        except Exception as e:
+            return HttpResponseBadRequest({"error": str(e)})
+
+    return HttpResponseBadRequest({"error": "Invalid request method"})
+
+
+@csrf_exempt
+def payment_success(request):
+    if request.method == "POST":
+        import json
+        data = json.loads(request.body)
+
+        # Verify the payment signature
+        params_dict = {
+            'razorpay_order_id': data['razorpay_order_id'],
+            'razorpay_payment_id': data['razorpay_payment_id'],
+            'razorpay_signature': data['razorpay_signature'],
+        }
+
+        try:
+            razorpay_client.utility.verify_payment_signature(params_dict)
+            return JsonResponse({"status": "Payment successful"})
+        except razorpay.errors.SignatureVerificationError:
+            return HttpResponseBadRequest({"status": "Payment failed"})
+
+    return HttpResponseBadRequest({"error": "Invalid request method"})
+
 
 # Home view (just a placeholder for now)
 def home(request):
