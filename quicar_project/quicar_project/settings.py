@@ -135,6 +135,6 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [os.path.join(BASE_DIR, 'static')]
 AUTH_USER_MODEL = 'user_auth.CustomUser'
-RAZORPAY_KEY_ID = "rzp_test_MzMtKFul81D0uc"
-RAZORPAY_KEY_SECRET = "TfMKXtCu80qGfEyHbTpxMPAE"
+RAZORPAY_KEY_ID = #
+RAZORPAY_KEY_SECRET = #
 
